@@ -1,7 +1,0 @@
-# Skip MPU configuration in bootloader, required for
-# allowing its configuration in NuttX image
-CONFIG_BOOTLOADER_REGION_PROTECTION_ENABLE=n
-
-# Use the partition table from this repository
-CONFIG_PARTITION_TABLE_CUSTOM=y
-CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
