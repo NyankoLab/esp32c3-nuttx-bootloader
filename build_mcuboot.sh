@@ -27,8 +27,6 @@ usage() {
 }
 
 setup() {
-  local target=${1}
-
   # Update MCUboot repository
 
   git -C "${SCRIPT_ROOTDIR}" submodule update --init mcuboot
@@ -41,10 +39,6 @@ setup() {
     # Not using --recursive since MCUboot only requires the bootloader_support component from IDF
 
     git -C "${MCUBOOT_ROOTDIR}" submodule update --init --checkout boot/espressif/hal/esp-idf
-  fi
-
-  if [ "${target}" == "esp32c3" ]; then
-    git -C "${MCUBOOT_ROOTDIR}" apply ${SCRIPT_ROOTDIR}/esp32c3.diff
   fi
 }
 
@@ -60,6 +54,10 @@ build_mcuboot() {
   local mcuboot_flashmode
   local mcuboot_flashfreq
   local make_generator
+
+  if [ "${target}" == "esp32c3" ]; then
+    git -C "${MCUBOOT_ROOTDIR}" apply ${SCRIPT_ROOTDIR}/esp32c3.diff
+  fi
 
   mcuboot_config=$(realpath "${config:-${SCRIPT_ROOTDIR}/mcuboot.conf}")
 
@@ -128,7 +126,7 @@ while getopts ":hc:f:s" arg; do
       config=${OPTARG}
       ;;
     s)
-      setup=${OPTARG}
+      setup
       ;;
     h)
       usage
