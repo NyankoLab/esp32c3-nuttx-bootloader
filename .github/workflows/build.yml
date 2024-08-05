@@ -17,7 +17,7 @@ jobs:
       - name: Build MCUboot bootloader
         uses: docker://docker.io/espressif/idf:v5.3
         with:
-          args: /bin/sh -c "git config --global --add safe.directory '*' && cd mcuboot && git apply ../esp32c3.diff && cd .. && ./build_mcuboot.sh -s -c ${{matrix.targets}}"
+          args: /bin/sh -c "git config --global --add safe.directory '*' && ./build_mcuboot.sh -s -c ${{matrix.targets}}"
       - uses: actions/upload-artifact@v3
         with:
           name: mcuboot-builds
