@@ -90,7 +90,7 @@ build_mcuboot() {
   cmake -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"  \
         -DMCUBOOT_TARGET="${target}"                \
         -DMCUBOOT_CONFIG_FILE="${mcuboot_config}"   \
-        -DIDF_PATH="${IDF_PATH}"                    \
+        -DESP_HAL_PATH="${IDF_PATH}"                \
         -B "${build_dir}"                           \
         "${make_generator}"                         \
         "${source_dir}"

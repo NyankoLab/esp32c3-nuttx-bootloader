@@ -7,33 +7,17 @@ on:
       - main
 
 jobs:
-  IDFboot:
-    runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        targets: [esp32, esp32s2, esp32s3, esp32c2, esp32c3, esp32c6, esp32h2]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build IDF bootloader and partition table
-        uses: docker://docker.io/espressif/idf:latest
-        with:
-          args: ./build_idfboot.sh -c ${{matrix.targets}}
-      - uses: actions/upload-artifact@v3
-        with:
-          name: idf-builds
-          path: out/
-
   MCUboot:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        targets: [esp32, esp32s2, esp32s3, esp32c3]
+        targets: [esp32c3]
     steps:
       - uses: actions/checkout@v3
       - name: Build MCUboot bootloader
-        uses: docker://docker.io/espressif/idf:v4.4
+        uses: docker://docker.io/espressif/idf:v5.3
         with:
-          args: /bin/sh -c "git config --global --add safe.directory '*' && ./build_mcuboot.sh -s -c ${{matrix.targets}}"
+          args: /bin/sh -c "git config --global --add safe.directory '*' && cd mcuboot && patch ../esp32c3.diff && cd .. && ./build_mcuboot.sh -s -c ${{matrix.targets}}"
       - uses: actions/upload-artifact@v3
         with:
           name: mcuboot-builds
@@ -41,7 +25,7 @@ jobs:
 
   Release-Artifacts:
     runs-on: ubuntu-20.04
-    needs: [IDFboot, MCUboot]
+    needs: [MCUboot]
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v3
@@ -53,7 +37,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
-            buildartifacts/idf-builds/*
             buildartifacts/mcuboot-builds/*
           tag: latest
           rm: true
