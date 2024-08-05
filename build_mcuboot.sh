@@ -40,10 +40,6 @@ setup() {
 
     git -C "${MCUBOOT_ROOTDIR}" submodule update --init --checkout boot/espressif/hal/esp-idf
   fi
-
-  if [ "${target}" == "esp32c3" ]; then
-    git -C "${MCUBOOT_ROOTDIR}" apply ../esp32c3.diff
-  fi
 }
 
 build_mcuboot() {
@@ -58,6 +54,10 @@ build_mcuboot() {
   local mcuboot_flashmode
   local mcuboot_flashfreq
   local make_generator
+
+  if [ "${target}" == "esp32c3" ]; then
+    git -C "${MCUBOOT_ROOTDIR}" apply ${SCRIPT_ROOTDIR}/esp32c3.diff
+  fi
 
   mcuboot_config=$(realpath "${config:-${SCRIPT_ROOTDIR}/mcuboot.conf}")
 
