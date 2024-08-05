@@ -55,10 +55,6 @@ build_mcuboot() {
   local mcuboot_flashfreq
   local make_generator
 
-  if [ "${target}" == "esp32c3" ]; then
-    git -C "${MCUBOOT_ROOTDIR}" apply ${SCRIPT_ROOTDIR}/esp32c3.diff
-  fi
-
   mcuboot_config=$(realpath "${config:-${SCRIPT_ROOTDIR}/mcuboot.conf}")
 
   # Try parsing Flash parameters from the mcuboot config file.
