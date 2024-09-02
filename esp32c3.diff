@@ -40,9 +40,23 @@ index ad6270d7..5cde0621 100644
 +
  uint32_t esp_log_early_timestamp(void);
 diff --git a/boot/espressif/port/esp32c3/bootloader.conf b/boot/espressif/port/esp32c3/bootloader.conf
-index 88954eea..0ceeebe3 100644
+index 88954eea..8564cb44 100644
 --- a/boot/espressif/port/esp32c3/bootloader.conf
 +++ b/boot/espressif/port/esp32c3/bootloader.conf
+@@ -6,10 +6,10 @@ CONFIG_ESP_FLASH_SIZE=4MB
+ CONFIG_ESP_BOOTLOADER_SIZE=0xF000
+ CONFIG_ESP_BOOTLOADER_OFFSET=0x0000
+ CONFIG_ESP_IMAGE0_PRIMARY_START_ADDRESS=0x10000
+-CONFIG_ESP_APPLICATION_SIZE=0x100000
+-CONFIG_ESP_IMAGE0_SECONDARY_START_ADDRESS=0x110000
++CONFIG_ESP_APPLICATION_SIZE=0x150000
++CONFIG_ESP_IMAGE0_SECONDARY_START_ADDRESS=0x160000
+ CONFIG_ESP_MCUBOOT_WDT_ENABLE=y
+-CONFIG_ESP_SCRATCH_OFFSET=0x210000
++CONFIG_ESP_SCRATCH_OFFSET=0x2B0000
+ CONFIG_ESP_SCRATCH_SIZE=0x40000
+ 
+ # When enabled, prevents updating image to an older version
 @@ -43,15 +43,15 @@ CONFIG_ESP_SCRATCH_SIZE=0x40000
  # CONFIG_ESP_SERIAL_BOOT_GPIO_TX=9
  
