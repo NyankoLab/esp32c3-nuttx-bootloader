@@ -39,3 +39,62 @@ index ad6270d7..5cde0621 100644
 +#define ESP_LOG_INFO MCUBOOT_LOG_LEVEL_INFO
 +
  uint32_t esp_log_early_timestamp(void);
+diff --git a/boot/espressif/hal/include/mcuboot_config/mcuboot_assert.h b/boot/espressif/hal/include/mcuboot_config/mcuboot_assert.h
+index fc599090..808c533f 100644
+--- a/boot/espressif/hal/include/mcuboot_config/mcuboot_assert.h
++++ b/boot/espressif/hal/include/mcuboot_config/mcuboot_assert.h
+@@ -11,9 +11,9 @@ extern void mcuboot_assert_handler(const char *file, int line, const char *func)
+ #ifdef assert
+ #undef assert
+ #endif
+-#define assert(arg)                                                 \
+-    do {                                                            \
+-        if (!(arg)) {                                               \
+-            mcuboot_assert_handler(__FILE__, __LINE__, __func__);   \
+-        }                                                           \
++#define assert(arg)                                                     \
++    do {                                                                \
++        if (!(arg)) {                                                   \
++            mcuboot_assert_handler(__FILE_NAME__, __LINE__, __func__);  \
++        }                                                               \
+     } while(0)
+diff --git a/boot/espressif/hal/include/mcuboot_config/mcuboot_logging.h b/boot/espressif/hal/include/mcuboot_config/mcuboot_logging.h
+index d6197729..ee5889ca 100644
+--- a/boot/espressif/hal/include/mcuboot_config/mcuboot_logging.h
++++ b/boot/espressif/hal/include/mcuboot_config/mcuboot_logging.h
+@@ -42,7 +42,7 @@ extern int ets_printf(const char *fmt, ...);
+ #if MCUBOOT_LOG_LEVEL >= MCUBOOT_LOG_LEVEL_ERROR
+ #define MCUBOOT_LOG_ERR(_fmt, ...)                                      \
+     do {                                                                \
+-            ets_printf(TARGET " [ERR] " _fmt "\n\r", ##__VA_ARGS__);         \
++        ets_printf(TARGET " [ERR] " _fmt "\n", ##__VA_ARGS__);          \
+     } while (0)
+ #else
+ #define MCUBOOT_LOG_ERR(_fmt, ...)
+@@ -51,7 +51,7 @@ extern int ets_printf(const char *fmt, ...);
+ #if MCUBOOT_LOG_LEVEL >= MCUBOOT_LOG_LEVEL_WARNING
+ #define MCUBOOT_LOG_WRN(_fmt, ...)                                      \
+     do {                                                                \
+-            ets_printf(TARGET " [WRN] " _fmt "\n\r", ##__VA_ARGS__);         \
++        ets_printf(TARGET " [WRN] " _fmt "\n", ##__VA_ARGS__);          \
+     } while (0)
+ #else
+ #define MCUBOOT_LOG_WRN(_fmt, ...)
+@@ -60,7 +60,7 @@ extern int ets_printf(const char *fmt, ...);
+ #if MCUBOOT_LOG_LEVEL >= MCUBOOT_LOG_LEVEL_INFO
+ #define MCUBOOT_LOG_INF(_fmt, ...)                                      \
+     do {                                                                \
+-            ets_printf(TARGET " [INF] " _fmt "\n\r", ##__VA_ARGS__);         \
++        ets_printf(TARGET " [INF] " _fmt "\n", ##__VA_ARGS__);          \
+     } while (0)
+ #else
+ #define MCUBOOT_LOG_INF(_fmt, ...)
+@@ -69,7 +69,7 @@ extern int ets_printf(const char *fmt, ...);
+ #if MCUBOOT_LOG_LEVEL >= MCUBOOT_LOG_LEVEL_DEBUG
+ #define MCUBOOT_LOG_DBG(_fmt, ...)                                      \
+     do {                                                                \
+-            ets_printf(TARGET " [DBG] " _fmt "\n\r", ##__VA_ARGS__);         \
++        ets_printf(TARGET " [DBG] " _fmt "\n", ##__VA_ARGS__);          \
+     } while (0)
+ #else
+ #define MCUBOOT_LOG_DBG(_fmt, ...)
